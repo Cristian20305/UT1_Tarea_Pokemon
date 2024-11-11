@@ -1,3 +1,5 @@
-Proyecto de pokemon en kotlin.
+Proyecto de pokemon en kotlin aqui se explicara la tarea mas detallamente.
 
-DIAGRAMA DE FLUJO DE DATOS ECHOS 
+Diagrama de flujo de datos echo. 
+
+Explicacion de su funcionamiento a continuacion:
