@@ -7,7 +7,7 @@ data class Entrenador(val nombre:String,val apellido:String,val numEntrenador:In
 //Interfaz Imprimible, metodo de devolver para que los pokemons devuelvan informacion en forma de cadena
 interface Imprimible{
 
-    fun devolverInfoString()
+    fun devolverInfoString():String
 
 }
 //Clase abstracta Pokemon implementamos de Imprimible
@@ -18,24 +18,24 @@ abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val ent
 //Subclase Comun
 class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos:List<String>, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
 
-    override fun devolverInfoString() {
-        println("ID: $id, Tipo $tipo, Nivel $nivelActual, Objetos $objetosEquipos")
+    override fun devolverInfoString(): String {
+        return  "ID: $id, Tipo $tipo, Nivel $nivelActual, Objetos $objetosEquipos, Obejtos equipados ${objetosEquipos.toString()}, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
     }
 
 }
 //Subclase Especial
 class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador,val poderCombateAdicional:String) :Pokemon(id, tipo, nivelActual,entrenador){
 
-    override fun devolverInfoString() {
-        println("ID: $id, Tipo: $tipo, Nivel: $nivelActual, Poder de Combate Adicional: $poderCombateAdicional")
+    override fun devolverInfoString():String {
+        return "ID: $id, Tipo: $tipo, Nivel: $nivelActual, Poder de Combate Adicional: $poderCombateAdicional, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
     }
 
 }
 //Subclase Legendario
 class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrenador ,val ataqueEspecial:String,val habilidadOculta:String) :Pokemon(id, tipo, nivelActual,entrenador){
 
-    override fun devolverInfoString() {
-        println("ID: $id, Tipo: $tipo, Nivel: $nivelActual, Ataque Especial: $ataqueEspecial, Habilidad Oculta: $habilidadOculta")
+    override fun devolverInfoString():String {
+        return "ID: $id, Tipo: $tipo, Nivel: $nivelActual, Ataque Especial: $ataqueEspecial, Habilidad Oculta: $habilidadOculta, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador}"
 
     }
 
