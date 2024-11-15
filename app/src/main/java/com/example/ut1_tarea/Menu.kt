@@ -16,7 +16,7 @@ abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val ent
 
 }
 //Subclase Comun
-class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: String, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
+class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: List<String>, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
 
     override fun devolverInfoString(): String {
         return  "ID: $id, Tipo $tipo, Nivel $nivelActual, Objetos $objetosEquipos, Obejtos equipados ${objetosEquipos.toString()}, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
@@ -84,8 +84,8 @@ class PokemonCenter{
         val pokemon=when(tipoPokemon){
 
             1.toString() ->{
-                println("Ingrese los objetos equipados")
-                val objetosEquipos= readln()
+                println("Ingrese los objetos equipados (separados por comas)")
+                val objetosEquipos= readln().split(",")
                 Comun(id,tipo,nivelActual,objetosEquipos,entrenador)
 
             }
