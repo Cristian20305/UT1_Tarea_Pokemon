@@ -70,4 +70,6 @@ class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrena
 //Clase PokemonManager para gestionar la lista de Pokemon
 class PokemonManager{
 
+
+
 }
