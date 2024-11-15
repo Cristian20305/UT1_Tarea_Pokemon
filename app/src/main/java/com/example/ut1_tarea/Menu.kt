@@ -1,9 +1,93 @@
 package com.example.ut1_tarea
 
+//Clase Entrenador
+data class Entrenador(val nombre:String,val apellido:String,val numEntrenador:Int){
+
+}
+//Interfaz Imprimible, metodo de devolver para que los pokemons devuelvan informacion en forma de cadena
+interface Imprimible{
+
+    fun devolverInfoString()
+
+}
+//Clase abstracta Pokemon implementamos de Imprimible
+abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val entrenador: Entrenador):Imprimible{
+
+
+}
+//Subclase Comun
+class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos:List<String>, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
+
+    override fun devolverInfoString() {
+        println("ID: $id, Tipo $tipo, Nivel $nivelActual, Objetos $objetosEquipos")
+    }
+
+}
+//Subclase Especial
+class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador,val poderCombateAdicional:String) :Pokemon(id, tipo, nivelActual,entrenador){
+
+    override fun devolverInfoString() {
+        println("ID: $id, Tipo: $tipo, Nivel: $nivelActual, Poder de Combate Adicional: $poderCombateAdicional")
+    }
+
+}
+//Subclase Legendario
+class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrenador ,val ataqueEspecial:String,val habilidadOculta:String) :Pokemon(id, tipo, nivelActual,entrenador){
+
+    override fun devolverInfoString() {
+        println("ID: $id, Tipo: $tipo, Nivel: $nivelActual, Ataque Especial: $ataqueEspecial, Habilidad Oculta: $habilidadOculta")
+
+    }
+
+}
+//Clase PokemonCenter para gestionar la lista de Pokemon y de mas operaciones
+class PokemonCenter{
+
+    private val  pokemons= mutableListOf<Pokemon>()
+
+    // Metodo para registrar un nuevo Pokemon
+    fun registrarPokemon(pokemon: Pokemon):Boolean {
+
+        //Si tenemos un hueco en la lista añadidos un nuevo Pokemon
+        return if (pokemons.size<100){
+            pokemons.add(pokemon)
+            true
+        } else{
+            println("No se pueden resgistrar más Pokemon. Has alcanzado el limite.")
+            false
+        }
+
+
+    }
+    //Metodo para obetner un listado de pokemon
+    fun listadoPokemon():List<String>{
+
+
+
+    }
+    // Metodo para obtener información detallada de un Pokemon
+    fun informacionPokemon(id: String):String{
+
+    }
+    // Metodo para incrementar el nivel de un Pokemon
+    fun incrementarNivel(id: String, cantidad:Int):Boolean {
+
+    }
+    // Metodo para disminuir el nivel de un Pokemon
+    fun disminuirNivel(id: String,cantidad: Int):Boolean{
+
+    }
+    // Metodo para consultar el nivel actual de un Pokemon
+    fun consultarNivel(id: String): Int{
+
+    }
+
+
+}
+
 fun main(){
 
-    val  pokemons= mutableListOf<String>()
-    val maximoPokemons=100 //maximo de registro 100 pokemons
+    val pokemonCenter=PokemonCenter()
 
     println("BIENVENIDO A GESTION POKEMON")
 
@@ -27,9 +111,13 @@ fun main(){
         }
 
         when(opcion){
-            1->{}
-            2->{}
-            3->{}
+            //Llamar a los metodos de pokemonCenter mas los datos que añadamos
+            1->pokemonCenter.registrarPokemon()
+            2->pokemonCenter.listadoPokemon()
+            3->{
+                println("Dime el nombre (ID) del Pokemon que buscas")
+
+            }
             4->{}
             5->{}
             6->{}
@@ -37,38 +125,6 @@ fun main(){
         }
 
     } while (opcion!=7)
-
-
-}
-//Clase Entrenador
-data class Entrenador(val nombre:String,val apellido:String,val numEntrenador:Int){
-
-}
-//Interfaz Imprimible
-interface Imprimible{
-
-}
-//Clase abstracta Pokemon
-abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val entrenador: Entrenador):Imprimible{
-
-
-}
-//Subclase Comun
-class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos:List<String>, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
-
-
-}
-//Subclase Especial
-class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador,val poderCombateAdicional:String) :Pokemon(id, tipo, nivelActual,entrenador){
-
-}
-//Subclase Legendario
-class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrenador ,val ataqueEspecial:String,val habilidadOculta:String) :Pokemon(id, tipo, nivelActual,entrenador){
-
-
-}
-//Clase PokemonManager para gestionar la lista de Pokemon
-class PokemonManager{
 
 
 }
