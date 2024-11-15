@@ -71,5 +71,4 @@ class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrena
 class PokemonManager{
 
 
-
 }
