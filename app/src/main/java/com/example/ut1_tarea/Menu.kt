@@ -16,7 +16,7 @@ abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val ent
 
 }
 //Subclase Comun
-class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos:List<String>, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
+class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: String, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
 
     override fun devolverInfoString(): String {
         return  "ID: $id, Tipo $tipo, Nivel $nivelActual, Objetos $objetosEquipos, Obejtos equipados ${objetosEquipos.toString()}, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
@@ -46,9 +46,76 @@ class PokemonCenter{
     private val  pokemons= mutableListOf<Pokemon>()
 
     // Metodo para registrar un nuevo Pokemon
+    fun registrarNuevoPokemon(){
+
+        //Si se detecta el pokemon mas de 100 no se pueden ingresar mas
+        if(pokemons.size>=100){
+            println("No se pueden registrar mas pokemon")
+            return
+        }
+        //Datos del entrenador para Introducir
+        println("Ingrese los datos del Entrenador: ")
+        println("Nombre: ")
+        val nombre= readln()
+
+        println("Apellido: ")
+        val apellido= readln()
+
+        println("Numero de Entrenador: ")
+        val numEntrenador= readln().toInt()
+        //Llamamos a la funcion entrenador y sus atributos
+        val entrenador=Entrenador(nombre,apellido,numEntrenador)
+
+        //Datos del Pokemon para introducir
+        println("Ingrese el ID del Pokemon (formato PXXXX): ")
+        val id= readln()
+        //• ID único del Pokémon, el cual se validará mediante una expresión regular con el formato PXXXX,
+        //donde X representa un dígito (del 0 al 9).
+
+        println("Tipo de Pokemon (fuego ,agua ,planta ,etc. )")
+        val tipo= readln()
+
+        println("Ingrese el nivel Actual de su Pokemon: ")
+        val nivelActual= readln().toInt()
+
+        //Un when (swicth) para selecionar el tipo de pokemons que es. Cada uno tiene un poder, objeto, ataque diferente
+        println("Tipo de Pokemon: 1. Comun 2.Especial 3.Legendario")
+        val tipoPokemon= readln()
+        val pokemon=when(tipoPokemon){
+
+            1.toString() ->{
+                println("Ingrese los objetos equipados")
+                val objetosEquipos= readln()
+                Comun(id,tipo,nivelActual,objetosEquipos,entrenador)
+
+            }
+            2.toString() -> {
+                println("Ingrese el poder de comabate adicional: ")
+                val poderCombateAdicional= readln()
+                Especial(id,tipo,nivelActual,entrenador,poderCombateAdicional)
+            }
+            3.toString() ->{
+                println("Ingrese el ataque especial: ")
+                val ataqueEspecial= readln()
+                println("Ingrese la habilidad oculta: ")
+                val habilidadOculta= readln()
+                Legenderio(id, tipo, nivelActual, entrenador, ataqueEspecial, habilidadOculta)
+            }
+
+            else -> {
+                println("Tipo de Pokemon no valido")
+                return
+            }
+        }
+        if (registrarPokemon(pokemon)){
+            println("Pokemon registrado correctamente")
+        }else println("Error al registrar el Pokemon")
+
+    }
+
     fun registrarPokemon(pokemon: Pokemon):Boolean {
 
-        //Si tenemos un hueco en la lista añadidos un nuevo Pokemon
+        //Si tenemos un hueco en la lista añadidos un nuevo Pokemon, luego lo llamamos en nuevo pokemon
         return if (pokemons.size<100){
             pokemons.add(pokemon)
             true
@@ -59,28 +126,28 @@ class PokemonCenter{
 
 
     }
-    //Metodo para obetner un listado de pokemon
-    fun listadoPokemon():List<String>{
-
-
-
-    }
-    // Metodo para obtener información detallada de un Pokemon
-    fun informacionPokemon(id: String):String{
-
-    }
-    // Metodo para incrementar el nivel de un Pokemon
-    fun incrementarNivel(id: String, cantidad:Int):Boolean {
-
-    }
-    // Metodo para disminuir el nivel de un Pokemon
-    fun disminuirNivel(id: String,cantidad: Int):Boolean{
-
-    }
-    // Metodo para consultar el nivel actual de un Pokemon
-    fun consultarNivel(id: String): Int{
-
-    }
+//    //Metodo para obetner un listado de pokemon
+//    fun listadoPokemon():List<String>{
+//
+//
+//
+//    }
+//    // Metodo para obtener información detallada de un Pokemon
+//    fun informacionPokemon(id: String):String{
+//
+//    }
+//    // Metodo para incrementar el nivel de un Pokemon
+//    fun incrementarNivel(id: String, cantidad:Int):Boolean {
+//
+//    }
+//    // Metodo para disminuir el nivel de un Pokemon
+//    fun disminuirNivel(id: String,cantidad: Int):Boolean{
+//
+//    }
+//    // Metodo para consultar el nivel actual de un Pokemon
+//    fun consultarNivel(id: String): Int{
+//
+//    }
 
 
 }
@@ -112,8 +179,8 @@ fun main(){
 
         when(opcion){
             //Llamar a los metodos de pokemonCenter mas los datos que añadamos
-            1->pokemonCenter.registrarPokemon()
-            2->pokemonCenter.listadoPokemon()
+            1->pokemonCenter.registrarNuevoPokemon()
+//            2->pokemonCenter.listadoPokemon()
             3->{
                 println("Dime el nombre (ID) del Pokemon que buscas")
 
