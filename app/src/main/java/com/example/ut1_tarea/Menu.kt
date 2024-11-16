@@ -11,12 +11,13 @@ interface Imprimible{
 
 }
 //Clase abstracta Pokemon implementamos de Imprimible
-abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val entrenador: Entrenador):Imprimible{
+abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val entrenador: Entrenador,val nombrePokemon:String):Imprimible{
 
 
 }
 //Subclase Comun
-class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: List<String>, entrenador: Entrenador):Pokemon(id, tipo, nivelActual, entrenador){
+class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: List<String>, entrenador: Entrenador,nombrePokemon: String)
+    :Pokemon(id,tipo, nivelActual, entrenador,nombrePokemon){
 
     override fun devolverInfoString(): String {
         return  "ID: $id, Tipo $tipo, Nivel $nivelActual, Objetos $objetosEquipos, Obejtos equipados ${objetosEquipos.toString()}, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
@@ -24,7 +25,8 @@ class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: List
 
 }
 //Subclase Especial
-class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador,val poderCombateAdicional:String) :Pokemon(id, tipo, nivelActual,entrenador){
+class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador,val poderCombateAdicional:String,nombrePokemon: String)
+    :Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
 
     override fun devolverInfoString():String {
         return "ID: $id, Tipo: $tipo, Nivel: $nivelActual, Poder de Combate Adicional: $poderCombateAdicional, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
@@ -32,7 +34,8 @@ class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador
 
 }
 //Subclase Legendario
-class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrenador ,val ataqueEspecial:String,val habilidadOculta:String) :Pokemon(id, tipo, nivelActual,entrenador){
+class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrenador ,val ataqueEspecial:String,val habilidadOculta:String,nombrePokemon: String)
+    :Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
 
     override fun devolverInfoString():String {
         return "ID: $id, Tipo: $tipo, Nivel: $nivelActual, Ataque Especial: $ataqueEspecial, Habilidad Oculta: $habilidadOculta, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador}"
@@ -72,6 +75,9 @@ class PokemonCenter{
         //• ID único del Pokémon, el cual se validará mediante una expresión regular con el formato PXXXX,
         //donde X representa un dígito (del 0 al 9).
 
+        println("Ingrese el nombre del Pokemon: ")
+        val nombrePokemon= readln()
+
         println("Tipo de Pokemon (fuego ,agua ,planta ,etc. )")
         val tipo= readln()
 
@@ -86,20 +92,20 @@ class PokemonCenter{
             1.toString() ->{
                 println("Ingrese los objetos equipados (separados por comas)")
                 val objetosEquipos= readln().split(",")
-                Comun(id,tipo,nivelActual,objetosEquipos,entrenador)
+                Comun(id,tipo,nivelActual,objetosEquipos,entrenador,nombrePokemon)
 
             }
             2.toString() -> {
                 println("Ingrese el poder de comabate adicional: ")
                 val poderCombateAdicional= readln()
-                Especial(id,tipo,nivelActual,entrenador,poderCombateAdicional)
+                Especial(id,tipo,nivelActual,entrenador,poderCombateAdicional,nombrePokemon)
             }
             3.toString() ->{
                 println("Ingrese el ataque especial: ")
                 val ataqueEspecial= readln()
                 println("Ingrese la habilidad oculta: ")
                 val habilidadOculta= readln()
-                Legenderio(id, tipo, nivelActual, entrenador, ataqueEspecial, habilidadOculta)
+                Legenderio(id, tipo, nivelActual, entrenador, ataqueEspecial, habilidadOculta,nombrePokemon)
             }
 
             else -> {
@@ -133,7 +139,7 @@ class PokemonCenter{
         val lista= mutableListOf<String>()
 
         for (pokemon in pokemons){
-            lista.add("ID: ${pokemon.id}, Tipo ${pokemon.tipo}, Nivel: ${pokemon.nivelActual}")
+            lista.add("ID: ${pokemon.id}, Nombre ${pokemon.nombrePokemon} , Tipo ${pokemon.tipo}, Nivel: ${pokemon.nivelActual}")
         }
         //Convertir la lista mutable a un array y devolverlo
         return lista.toTypedArray()
