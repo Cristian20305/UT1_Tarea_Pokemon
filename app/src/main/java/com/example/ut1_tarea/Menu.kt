@@ -126,12 +126,19 @@ class PokemonCenter{
 
 
     }
-//    //Metodo para obetner un listado de pokemon
-//    fun listadoPokemon():List<String>{
-//
-//
-//
-//    }
+    //Metodo para obetner un listado de pokemon en forma de un array de cadenas
+    fun listadoPokemon():Array<String>{
+
+        //Creamos otra lista mutable para alamacenar la informacion basica de cada pokemon
+        val lista= mutableListOf<String>()
+
+        for (pokemon in pokemons){
+            lista.add("ID: ${pokemon.id}, Tipo ${pokemon.tipo}, Nivel: ${pokemon.nivelActual}")
+        }
+        //Convertir la lista mutable a un array y devolverlo
+        return lista.toTypedArray()
+
+    }
 //    // Metodo para obtener información detallada de un Pokemon
 //    fun informacionPokemon(id: String):String{
 //
@@ -163,7 +170,7 @@ fun main(){
 
         println("********************")
         println("1. Registrar un nuevo Pokemon")
-        println("2. Listado de Pokemon (ID,Nombre,Pokemon)")
+        println("2. Listado de los Pokemon resgistrados (ID,Nombre,Pokemon)")
         println("3. Obtener informacion detallada de un Pokemon")
         println("4. Incrementar el nivel de un Pokemon")
         println("5. Diminuir el nivel de un Pokemon")
@@ -180,7 +187,10 @@ fun main(){
         when(opcion){
             //Llamar a los metodos de pokemonCenter mas los datos que añadamos
             1->pokemonCenter.registrarNuevoPokemon()
-//            2->pokemonCenter.listadoPokemon()
+            2->{val listado=pokemonCenter.listadoPokemon()
+                println("Listado de Pokemon registrados:")
+                listado.forEach { println(it) }
+            }
             3->{
                 println("Dime el nombre (ID) del Pokemon que buscas")
 
