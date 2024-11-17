@@ -168,10 +168,22 @@ class PokemonCenter{
 //    fun disminuirNivel(id: String,cantidad: Int):Boolean{
 //
 //    }
-//    // Metodo para consultar el nivel actual de un Pokemon
-//    fun consultarNivel(id: String): Int{
-//
-//    }
+    // Metodo para consultar el nivel actual de un Pokemon
+    fun consultarNivel(id: String): Int{
+
+        for (pokemon in pokemons){
+
+            if (pokemon.id==id){
+
+                //Devolvemos el nivel actual del Pokemon se lo encontramos
+                 return pokemon.nivelActual
+            }
+
+        }
+        //Si no encontramos el Pokemon, devolvemos -1
+        return -1
+
+    }
 
 
 }
@@ -222,7 +234,16 @@ fun main(){
             }
             4->{}
             5->{}
-            6->{}
+            6->{
+                println("Dime el ID (PXXXX) del pokemon para consultar su nivel")
+                val id= readln()
+                val nivel=pokemonCenter.consultarNivel(id)
+                if (nivel!=-1){
+                    println("El nivel del Pokemon con ID $id es: $nivel")
+                }else{
+                    println("No se encontro ningun Pokemon con el ID introducido $id")
+                }
+            }
             7-> println("Saliendo de la aplicacion. !Vuelve luego¡")
         }
 
