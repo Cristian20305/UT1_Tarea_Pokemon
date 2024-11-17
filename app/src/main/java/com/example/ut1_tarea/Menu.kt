@@ -145,10 +145,21 @@ class PokemonCenter{
         return lista.toTypedArray()
 
     }
-//    // Metodo para obtener información detallada de un Pokemon
-//    fun informacionPokemon(id: String):String{
-//
-//    }
+    // Metodo para obtener información detallada de un Pokemon como cadena, o null si el pokemon no existe
+    fun informacionPokemon(id: String): String? {
+
+        //Recorremos la lista de pokemon
+        for (pokemon in pokemons){
+            //Verificamos si el id coincide con el que introducimos
+            if (pokemon.id ==id){
+                //Si coincide devolvemos toda su informacion
+                return pokemon.devolverInfoString()
+            }
+        }
+        //Si no existe devolvemos null
+        return null
+
+    }
 //    // Metodo para incrementar el nivel de un Pokemon
 //    fun incrementarNivel(id: String, cantidad:Int):Boolean {
 //
@@ -198,7 +209,15 @@ fun main(){
                 listado.forEach { println(it) }
             }
             3->{
-                println("Dime el nombre (ID) del Pokemon que buscas")
+                println("Dime el nombre (ID PXXXX) del Pokemon que buscas")
+                val id= readln()
+                val info=pokemonCenter.informacionPokemon(id)
+                if (info!=null){
+                    println("Informacion detallada del Pokemon")
+                    println(info)
+                }else{
+                    println("No se encontro ningun Pokemon con el ID introducido")
+                }
 
             }
             4->{}
