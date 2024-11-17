@@ -11,7 +11,8 @@ interface Imprimible{
 
 }
 //Clase abstracta Pokemon implementamos de Imprimible
-abstract class Pokemon(val id:String,val tipo:String,val nivelActual:Int,val entrenador: Entrenador,val nombrePokemon:String):Imprimible{
+//Cambio de nivelActual a var
+abstract class Pokemon(val id:String, val tipo:String, var nivelActual:Int, val entrenador: Entrenador, val nombrePokemon:String):Imprimible{
 
 
 }
@@ -160,10 +161,22 @@ class PokemonCenter{
         return null
 
     }
-//    // Metodo para incrementar el nivel de un Pokemon
-//    fun incrementarNivel(id: String, cantidad:Int):Boolean {
-//
-//    }
+    // Metodo para incrementar el nivel de un Pokemon. Devuelve true o false indicando si fue exitoso
+    fun incrementarNivel(id: String, cantidad:Int):Boolean {
+
+        //Recorremos la lista de pokemon
+        for (pokemon in pokemons){
+            //Verificamos si el id coincide con el que introducimos
+            if (pokemon.id==id){
+                //incrementar el nivel del Pokemon actual con la cantidad introducico, imporatante el = para que se lo asigne a nivelActual
+                pokemon.nivelActual += cantidad
+                return true //devolvemos true si la operacion es un exito
+            }
+        }
+        //Si no encuentra el Pokemon, devolvemos falso
+        return false
+
+    }
 //    // Metodo para disminuir el nivel de un Pokemon
 //    fun disminuirNivel(id: String,cantidad: Int):Boolean{
 //
@@ -233,7 +246,18 @@ fun main(){
                 }
 
             }
-            4->{}
+            4->{
+                println("Dime el ID (PXXXX) del Pokemon que deseas incrementar el nivel ")
+                val id= readln()
+                println("¿Cuanto deseas incrementar el nivel ?")
+                val cantidad= readln().toInt()
+                val resultado=pokemonCenter.incrementarNivel(id, cantidad)
+                if (resultado){
+                    println("El nivel del Pokémon con ID $id fue incrementado en $cantidad ")
+                }else{
+                    println("No se encontro ningun Pokemon con el ID introducido")
+                }
+            }
             5->{}
             6->{
                 println("Dime el ID (PXXXX) del pokemon para consultar su nivel")
