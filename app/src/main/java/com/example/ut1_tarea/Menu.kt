@@ -177,10 +177,28 @@ class PokemonCenter{
         return false
 
     }
-//    // Metodo para disminuir el nivel de un Pokemon
-//    fun disminuirNivel(id: String,cantidad: Int):Boolean{
-//
-//    }
+    // Metodo para disminuir el nivel de un Pokemon
+    fun disminuirNivel(id: String,cantidad: Int):Boolean{
+
+        //Recorremos la lista de pokemon
+        for (pokemon in pokemons){
+            //Verificamos si el id coincide con el que introducimos
+            if (pokemon.id==id){
+                //Para poder verificar que el nivel no baje de 1
+                if (pokemon.nivelActual-cantidad>=1){
+                //incrementar el nivel del Pokemon actual con la cantidad introducico, imporatante el = para que se lo asigne a nivelActual
+                pokemon.nivelActual -= cantidad
+                return true //devolvemos true si la operacion es un exito
+                }else{
+                    //No se puede bajar mas de uno
+                    println("El nivel no puede bajar de 1 ")
+                    return false
+                }
+            }
+        }
+        //Si no encuentra el Pokemon, devolvemos falso
+        return false
+    }
     // Metodo para consultar el nivel actual de un Pokemon
     fun consultarNivel(id: String): Int{
 
@@ -258,7 +276,19 @@ fun main(){
                     println("No se encontro ningun Pokemon con el ID introducido")
                 }
             }
-            5->{}
+            5->{
+                println("Dime el ID (PXXXX) del Pokemon que deseas disminuir el nivel ")
+                val id= readln()
+                println("¿Cuanto deseas disminuir el nivel ?")
+                val cantidad= readln().toInt()
+                val resultado=pokemonCenter.disminuirNivel(id, cantidad)
+                if (resultado){
+                    println("El nivel del Pokémon con ID $id fue disminuido en $cantidad ")
+                }else{
+                    println("No se puede disminuir el nivel. Verifica que el ID sea correcto y que el nivel no baje de 1")
+                }
+
+            }
             6->{
                 println("Dime el ID (PXXXX) del pokemon para consultar su nivel")
                 val id= readln()
