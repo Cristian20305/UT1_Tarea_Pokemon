@@ -171,16 +171,17 @@ class PokemonCenter{
     // Metodo para consultar el nivel actual de un Pokemon
     fun consultarNivel(id: String): Int{
 
+        //Recorremos la lista de pokemon
         for (pokemon in pokemons){
-
+            //Verificamos si el id coincide con el que introducimos
             if (pokemon.id==id){
 
-                //Devolvemos el nivel actual del Pokemon se lo encontramos
+                //Si coincide devolvemos el nivel actual del Pokemon se lo encontramos
                  return pokemon.nivelActual
             }
 
         }
-        //Si no encontramos el Pokemon, devolvemos -1
+        //Si no lo encontramos el Pokemon, devolvemos -1
         return -1
 
     }
