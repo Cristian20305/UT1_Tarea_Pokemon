@@ -14,14 +14,19 @@ interface Imprimible{
 //Cambio de nivelActual a var
 abstract class Pokemon(val id:String, val tipo:String, var nivelActual:Int, val entrenador: Entrenador, val nombrePokemon:String):Imprimible{
 
+    override fun devolverInfoString(): String {
+        return  "ID: $id, Tipo $tipo, Nivel $nivelActual, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador}, "
+
+    }
 
 }
 //Subclase Comun
 class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: List<String>, entrenador: Entrenador,nombrePokemon: String)
     :Pokemon(id,tipo, nivelActual, entrenador,nombrePokemon){
 
+        //actualizar para que solo sobrescriba obejtosEquipados y que el devolver lo llame de pokemon
     override fun devolverInfoString(): String {
-        return  "ID: $id, Tipo $tipo, Nivel $nivelActual, Objetos $objetosEquipos, Obejtos equipados ${objetosEquipos.toString()}, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
+        return super.devolverInfoString()+ " Obejtos equipados: ${objetosEquipos.joinToString (", ")  }"
     }
 
 }
@@ -30,7 +35,7 @@ class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador
     :Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
 
     override fun devolverInfoString():String {
-        return "ID: $id, Tipo: $tipo, Nivel: $nivelActual, Poder de Combate Adicional: $poderCombateAdicional, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador} "
+        return super.devolverInfoString() + " Poder de Combate Adicional: $poderCombateAdicional "
     }
 
 }
@@ -39,7 +44,7 @@ class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrena
     :Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
 
     override fun devolverInfoString():String {
-        return "ID: $id, Tipo: $tipo, Nivel: $nivelActual, Ataque Especial: $ataqueEspecial, Habilidad Oculta: $habilidadOculta, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador}"
+        return super.devolverInfoString() + " Ataque Especial: $ataqueEspecial, Habilidad Oculta: $habilidadOculta "
 
     }
 
@@ -87,21 +92,19 @@ class PokemonCenter{
 
         //Un when (swicth) para selecionar el tipo de pokemons que es. Cada uno tiene un poder, objeto, ataque diferente
         println("Tipo de Pokemon: 1. Comun 2.Especial 3.Legendario")
-        val tipoPokemon= readln()
+        val tipoPokemon= readln().toInt()
         val pokemon=when(tipoPokemon){
 
-            1.toString() ->{
+            1 ->{
                 println("Ingrese los objetos equipados (separados por comas)")
                 val objetosEquipos= readln().split(",")
                 Comun(id,tipo,nivelActual,objetosEquipos,entrenador,nombrePokemon)
 
-            }
-            2.toString() -> {
+            }2 -> {
                 println("Ingrese el poder de comabate adicional: ")
                 val poderCombateAdicional= readln()
                 Especial(id,tipo,nivelActual,entrenador,poderCombateAdicional,nombrePokemon)
-            }
-            3.toString() ->{
+            }3 ->{
                 println("Ingrese el ataque especial: ")
                 val ataqueEspecial= readln()
                 println("Ingrese la habilidad oculta: ")
