@@ -244,6 +244,7 @@ class PokemonCenter{
 
         }
         //Si no lo encontramos el Pokemon, devolvemos -1
+        println("El Pokemon con ID $id no existe.")
         return -1
 
     }
@@ -269,7 +270,7 @@ fun main(){
         println("6. Consultar el nivel actual de un Pokemon")
         println("7. Salir de la aplicacion")
 
-        println("Selecciones una opción: ")
+        println("Seleccione una opción: ")
 
         val opcion= readln().toInt()
         if (opcion !in 1..7){
@@ -279,9 +280,15 @@ fun main(){
         when(opcion){
             //Llamar a los metodos de pokemonCenter mas los datos que añadamos
             1->pokemonCenter.registrarNuevoPokemon()
-            2->{val listado=pokemonCenter.listadoPokemon()
-                println("Listado de Pokemon registrados:")
-                listado.forEach { println(it) }
+            2->{
+                val listado=pokemonCenter.listadoPokemon()
+                if (listado.isEmpty()){
+                    println("Listado de Pokemon registrados vacio: ")
+                }else{
+                    println("Listado de Pokemon registrados: ")
+                    listado.forEach { println(it) }
+                }
+
             }
             3->{
                 println("Dime el nombre (ID PXXXX) del Pokemon que buscas")
@@ -304,7 +311,7 @@ fun main(){
                 if (resultado){
                     println("El nivel del Pokémon con ID $id fue incrementado en $cantidad ")
                 }else{
-                    println("No se encontro ningun Pokemon con el ID introducido")
+                    println("No se encontro ningun Pokemon con el $id introducido")
                 }
             }
             5->{
