@@ -76,10 +76,38 @@ class PokemonCenter{
         val entrenador=Entrenador(nombre,apellido,numEntrenador)
 
         //Datos del Pokemon para introducir
-        println("Ingrese el ID del Pokemon (formato PXXXX): ")
-        val id= readln()
-        //• ID único del Pokémon, el cual se validará mediante una expresión regular con el formato PXXXX,
-        //donde X representa un dígito (del 0 al 9).
+        // Validacion del ID del Pokémon con Regex
+        // Expresion regular para validar el formato del ID del Pokémon, debe empezar con P seguida de 4 digitos.
+        val regexId = Regex("^P\\d{4}$")
+        // La expresión "^P\\d{4}$" significa:
+        // - ^: el inicio de la cadena.
+        // - P: la letra 'P' debe aparecer al inicio.
+        // - \\d{4}: cuatro dígitos (0-9) consecutivos después de la 'P'.
+        // - $: el final de la cadena.
+
+        var id: String
+
+        // Utilizamos un bucle para garatizar que se mete un id con el formato pedido
+        do {
+            println("Ingrese el ID del Pokemon (formato PXXXX): ")
+            id = readln()
+
+            // Comprobamos si el ID ingresado no coincide con la expresión regular si no coincide el formato es incorrecto
+            if (!regexId.matches(id)) {
+                // Si el formato es incorrecto, mostramos un mensaje de error
+                println("Formato de ID no valido. Debe ser PXXXX, donde X es un digito (0-9). Intentela de nuevo !!! ")
+
+            // Comprobamos si el ID ya existe en la lista de Pokemon que tenemos
+            } else if (pokemons.any { it.id == id }) {
+                //si se cumple la condicion que encuentra un mismo id, lanza any que evalua cada elemento de la lista pokemons
+                //y devuelve true si cumple la condicion de los parentessis
+                // Si el ID ya esta registrado, muestra un mensaje indicando el error.
+                println("El ID ingresado ya esta registrado. Prueba otra vez !!!")
+                // Vacia la variable id para repetir el bucle.
+                id = ""
+            }
+        //El bucle continua mientras el ID no coincida con el formato correcto o ya este registrado en pokemon
+        } while (!regexId.matches(id))
 
         println("Ingrese el nombre del Pokemon: ")
         val nombrePokemon= readln()
