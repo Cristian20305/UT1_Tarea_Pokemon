@@ -118,3 +118,6 @@ El menú es el punto de entrada al programa y permite realizar las siguientes ac
 El programa está diseñado para ser fácil de usar, extensible y cumplir con el objetivo de simular una experiencia simple y entretenida basada en Pokémon.  
 El uso de conceptos como **herencia**, **polimorfismo** y **abstracción** no solo hace que el código sea más limpio, sino también más fácil de mantener y ampliar en el futuro si es necesario.
 
+## **Información Adicional**
+La clase `Pokemon` es abstracta para garantizar que todos los Pokemon comparten ciertos atributos y comportamientos básicos, pero también que implementen sus propias versiones de métodos esenciales como en Comun `objetosEquipados()`. La interfaz `(Imprimible)` aporta flexibilidad al sistema al permitir que las clases implementen comportamientos adicionales sin afectar la jerarquía de herencia. Este enfoque combina las ventajas de la abstracción y la flexibilidad de las interfaces.
+
