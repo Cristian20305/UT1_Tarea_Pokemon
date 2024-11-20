@@ -21,7 +21,9 @@ fun main(){
         println("Seleccione una opción: ")
 
         val opcion=try {
+            //Convertimos a un entero
             readln().toInt()
+        //Si falla la conversion se captura la Excepcion y se muestra un mensaje de error, luego devolvemos -1 como valor en caso de error
         } catch (e:NumberFormatException){
             println("ERROR. Debes introducir un numero comprendido entre 1 y 7.")
             -1
