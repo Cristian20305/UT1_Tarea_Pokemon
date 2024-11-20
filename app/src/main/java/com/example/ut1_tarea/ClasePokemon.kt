@@ -1,18 +1,24 @@
 package com.example.ut1_tarea
 
-//Clase Entrenador
+//Clase Entrenador: alamecena informacion sobre el entrenador
 data class Entrenador(val nombre:String,val apellido:String,val numEntrenador:Int){
 
 }
-//Interfaz Imprimible, metodo de devolver para que los pokemons devuelvan informacion en forma de cadena
+//Interfaz Imprimible,asegura que las clases que la implementen tengan un metodo para devolver informacion en forma de cadena
 interface Imprimible{
 
     fun devolverInfoString():String
 
 }
-//Clase abstracta Pokemon implementamos de Imprimible
+
+//Clase abstracta Pokemon implementamos de Imprimible. Clase base para representar a un Pokemon
 //Cambio de nivelActual a var
-abstract class Pokemon(val id:String, val tipo:String, var nivelActual:Int, val entrenador: Entrenador, val nombrePokemon:String):Imprimible{
+abstract class Pokemon(val id:String,
+                       val tipo:String,
+                       var nivelActual:Int,
+                       val entrenador: Entrenador,
+                       val nombrePokemon:String
+):Imprimible{
 
     override fun devolverInfoString(): String {
         return  "ID: $id, Tipo $tipo, Nivel $nivelActual, Entrenador: ${entrenador.nombre}, ${entrenador.apellido}, Numero Entrenador ${entrenador.numEntrenador}, "
@@ -20,28 +26,45 @@ abstract class Pokemon(val id:String, val tipo:String, var nivelActual:Int, val 
     }
 
 }
-//Subclase Comun
-class Comun(id: String, tipo: String, nivelActual: Int, val objetosEquipos: List<String>, entrenador: Entrenador,nombrePokemon: String)
-    :Pokemon(id,tipo, nivelActual, entrenador,nombrePokemon){
+
+//Subclase Comun: para representar a un Pokemon comun
+class Comun(id: String,
+            tipo: String,
+            nivelActual: Int,
+            val objetosEquipos: List<String>,
+            entrenador: Entrenador,
+            nombrePokemon: String
+):Pokemon(id,tipo, nivelActual, entrenador,nombrePokemon){
 
         //actualizar para que solo sobrescriba obejtosEquipados y que el devolver lo llame de pokemon
     override fun devolverInfoString(): String {
-        return super.devolverInfoString()+ " Obejtos equipados: ${objetosEquipos.joinToString (", ")  }"
+        return super.devolverInfoString()+ " Obejtos equipados: ${objetosEquipos.joinToString (", ")  }" //un separador para que la lista aparezca separado por comas
     }
 
 }
-//Subclase Especial
-class Especial(id: String, tipo: String, nivelActual: Int,entrenador: Entrenador,val poderCombateAdicional:String,nombrePokemon: String)
-    :Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
+//Subclase Especial: representa a un Pokemon especial.
+class Especial(id: String,
+               tipo: String,
+               nivelActual: Int,
+               entrenador: Entrenador,
+               val poderCombateAdicional:String,
+               nombrePokemon: String
+):Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
 
     override fun devolverInfoString():String {
         return super.devolverInfoString() + " Poder de Combate Adicional: $poderCombateAdicional "
     }
 
 }
-//Subclase Legendario
-class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrenador ,val ataqueEspecial:String,val habilidadOculta:String,nombrePokemon: String)
-    :Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
+//Subclase Legendario representa a un Pokemon legendario
+class Legendario(id: String,
+                 tipo: String,
+                 nivelActual: Int,
+                 entrenador: Entrenador,
+                 val ataqueEspecial:String,
+                 val habilidadOculta:String,
+                 nombrePokemon: String
+):Pokemon(id, tipo, nivelActual,entrenador,nombrePokemon){
 
     override fun devolverInfoString():String {
         return super.devolverInfoString() + " Ataque Especial: $ataqueEspecial, Habilidad Oculta: $habilidadOculta "
@@ -52,6 +75,7 @@ class Legenderio(id: String, tipo: String, nivelActual: Int, entrenador: Entrena
 //Clase PokemonCenter para gestionar la lista de Pokemon y de mas operaciones
 class PokemonCenter{
 
+    //Lista para guardar a los Pokemons
     private val  pokemons= mutableListOf<Pokemon>()
 
     // Metodo para registrar un nuevo Pokemon
@@ -72,7 +96,7 @@ class PokemonCenter{
 
         println("Numero de Entrenador: ")
         val numEntrenador= readln().toInt()
-        //Llamamos a la funcion entrenador y sus atributos
+        //Llamamos a la funcion entrenador y sus atributos para pasar los datos
         val entrenador=Entrenador(nombre,apellido,numEntrenador)
 
         //Datos del Pokemon para introducir
@@ -106,7 +130,7 @@ class PokemonCenter{
                 // Vacia la variable id para repetir el bucle.
                 id = ""
             }
-        //El bucle continua mientras el ID no coincida con el formato correcto o ya este registrado en pokemon
+        //El bucle continua mientras el ID no coincida con el formato correcto o ya este registrado un pokemon con ese ID
         } while (!regexId.matches(id))
 
         println("Ingrese el nombre del Pokemon: ")
@@ -124,27 +148,32 @@ class PokemonCenter{
         val pokemon=when(tipoPokemon){
 
             1 ->{
+                //Pokemon Comun objetos equipados que se guardan en una lista
                 println("Ingrese los objetos equipados (separados por comas)")
-                val objetosEquipos= readln().split(",")
+                val objetosEquipos= readln().split(",")// utilzamos split para que se puedan almacenar separados por comas
                 Comun(id,tipo,nivelActual,objetosEquipos,entrenador,nombrePokemon)
 
             }2 -> {
+                //Pokemon Especial un poder de comabte adicional
                 println("Ingrese el poder de comabate adicional: ")
                 val poderCombateAdicional= readln()
                 Especial(id,tipo,nivelActual,entrenador,poderCombateAdicional,nombrePokemon)
             }3 ->{
+                //Pokemon Legendario con un atque especial mas una habilidad oculta
                 println("Ingrese el ataque especial: ")
                 val ataqueEspecial= readln()
                 println("Ingrese la habilidad oculta: ")
                 val habilidadOculta= readln()
-                Legenderio(id, tipo, nivelActual, entrenador, ataqueEspecial, habilidadOculta,nombrePokemon)
+                Legendario(id, tipo, nivelActual, entrenador, ataqueEspecial, habilidadOculta,nombrePokemon)
             }
-
+            //Si no introducimos uno de esos numeros el pokemon sera no valido
             else -> {
                 println("Tipo de Pokemon no valido")
                 return
             }
         }
+        //Si llega hata aqui el programa porque es correcto añadimos el Pokemon exitosamente a resgitrarPokemon
+        // si no es asi decimos que Error al registrar pokemon y no lo añadimos
         if (registrarPokemon(pokemon)){
             println("Pokemon registrado correctamente")
         }else println("Error al registrar el Pokemon")
@@ -164,12 +193,13 @@ class PokemonCenter{
 
 
     }
-    //Metodo para obetner un listado de pokemon en forma de un array de cadenas
+    //Metodo para obtener un listado de pokemon en forma de un array de cadenas
     fun listadoPokemon():Array<String>{
 
         //Creamos otra lista mutable para alamacenar la informacion basica de cada pokemon
         val lista= mutableListOf<String>()
 
+        //Recorremos los datos que necesitamos de ese pokemons para mostrarlos y los añadimos a la lista
         for (pokemon in pokemons){
             lista.add("ID: ${pokemon.id}, Nombre ${pokemon.nombrePokemon} , Tipo ${pokemon.tipo}, Nivel: ${pokemon.nivelActual}")
         }
@@ -199,6 +229,7 @@ class PokemonCenter{
         for (pokemon in pokemons){
             //Verificamos si el id coincide con el que introducimos
             if (pokemon.id==id){
+
                 //incrementar el nivel del Pokemon actual con la cantidad introducico, imporatante el = para que se lo asigne a nivelActual
                 pokemon.nivelActual += cantidad
                 return true //devolvemos true si la operacion es un exito
